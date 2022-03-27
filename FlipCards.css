@@ -1,0 +1,20 @@
+div#memory-game {
+				width: 600px;
+				height: 400px;
+				padding: 24px;
+				margin: auto;
+			}
+div#memory-game > div {
+				width: 90px;
+				height: 90px;
+				float: left;
+				border:solid;
+				margin: 10px;
+				padding: 20px;
+				font-size: 60px;
+				text-align: center;
+				background-image: url("main.png");
+	            background-repeat: no-repeat;
+	            background-size: 130px 130px;
+
+			}

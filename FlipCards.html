@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="FlipCards.css">
+	<script>
+	    let url1 = new URL('https://javascript.info/profile/flavia_dorobat3');
+		alert(url1);
+		var n=6;
+		index=[];
+		for(let i =1; i <= n; i++) {
+			index.push(i);
+			index.push(i);
+		}
+		index = index.sort(() => Math.random() - 0.5);//shuffle
+		var showedCards = [];
+		var cardsID = [];
+		var flippedCards = 0;
+
+		function startGame() {
+			flippedCards = 0;
+			var data='';
+
+			for (var i = 0; i < index.length; i++) {
+				data += '<div id="card_' + i + '" onclick="flipCard(this,\'' + index[i] + '\')"></div>';
+			}
+			document.getElementById('memory-game').innerHTML = data;
+		}
+
+		async function flipCard(card, value) {
+			if (card.innerHTML == "" && showedCards.length < 2) {//showing a card that isn't already flipped + no more than 2 cards flipped
+				
+
+				//WITH IMAGES
+				card.style.backgroundImage = "url(resources_images/smiley-"+value+".png)";
+
+				if (showedCards.length == 0) {//"first" card showed
+					showedCards.push(value);
+					cardsID.push(card.id);
+				} else if (showedCards.length == 1) {
+					showedCards.push(value);
+					cardsID.push(card.id);
+					if (showedCards[0] == showedCards[1]) {//matching cards
+						flippedCards += 2;
+						if (flippedCards == index.length) {//all the cards are flipped
+							
+
+							//WITH IMAGES
+							  card.style.backgroundImage = "url(smiley-"+value+".png)";
+
+							await sleep(300);
+							document.getElementById('memory-game').innerHTML = "";
+							alert("CONGRATULATIONS, YOU WON!");
+							startGame();
+						}
+					} else {//non maching cards
+						await sleep(500);
+
+						var card1 = document.getElementById(cardsID[0]);
+						var card2 = document.getElementById(cardsID[1]);
+						card1.innerHTML = "";
+						card2.innerHTML = "";
+						card1.style.backgroundImage = "url('resources_images//main.png')";
+						card2.style.backgroundImage = "url('resources_images//main.png')";
+					}
+					showedCards = [];
+					cardsID = [];
+				}
+			}
+		}
+		function sleep(ms) {
+			return new Promise(resolve => setTimeout(resolve, ms));
+		}
+	</script>
+
+</head>
+<body>
+<div id="memory-game"></div>
+<script>startGame();</script>
+</body>
+</html>
